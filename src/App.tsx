@@ -32,14 +32,22 @@ function App() {
     }
 
     function addTask(title: string) {
-        let newTask = {id: v1(), title: title, isDone: true}
+        let newTask = {id: v1(), title: title, isDone: false}
         setTasks([newTask, ...tasks])
+    }
+
+    function changeStatus(id: string, isDone: boolean){
+        let task = tasks.find(t => t.id === id)
+        if(task){
+            task.isDone = isDone
+            setTasks([...tasks])
+        }
     }
 
     return (
         <div className="App">
             <TodoList title="What to learn" tasks={tasksForTodoList} remoteTask={remoteTask}
-                      changeFilter={changeFilter} addTask={addTask}/>
+                      changeFilter={changeFilter} addTask={addTask} changeStatus={changeStatus} filter={filter}/>
         </div>
     );
 }

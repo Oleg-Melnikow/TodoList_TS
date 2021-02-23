@@ -1,8 +1,33 @@
 .App {
-  padding: 30px;
-  display: flex;
+    padding: 30px;
+    display: flex;
 }
 
 .App > div {
-  margin-right: 50px;
+    margin-right: 50px;
+}
+
+.App ul {
+    padding: 0;
+}
+
+.App li {
+    list-style-type: none;
+}
+
+.error {
+  border: red 2px solid;
+  outline: none;
+}
+
+.error-message {
+    color: red;
+}
+
+.active-filter {
+  background-color: aquamarine;
+}
+
+.is-done {
+    opacity: 0.5;
 }
