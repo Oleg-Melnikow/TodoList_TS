@@ -2,12 +2,14 @@ import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {FilterValueType} from "./App";
 
 type PropsType = {
+    id: string,
     title: string,
     tasks: Array<TaskType>,
-    remoteTask: (id: string) => void,
-    changeFilter: (value: FilterValueType) => void
-    addTask: (title: string) => void
-    changeStatus: (id: string, isDone: boolean) => void
+    remoteTask: (id: string, todoListId: string) => void,
+    changeFilter: (value: FilterValueType, todoListId: string) => void,
+    addTask: (title: string, todoListId: string) => void,
+    changeStatus: (id: string, isDone: boolean, todoListId: string) => void,
+    remoteTodoList: (todoListId: string) => void,
     filter: string
 }
 
@@ -24,7 +26,7 @@ export function TodoList(props: PropsType) {
 
     function addTask() {
         if (title.trim() !== "") {
-            props.addTask(title)
+            props.addTask(title, props.id)
             setTitle("")
         } else {
             setError("Title is required")
@@ -40,13 +42,17 @@ export function TodoList(props: PropsType) {
         e.key === "Enter" && addTask()
     }
 
-    const onAllClickHandler = () => props.changeFilter("all")
-    const onActiveClickHandler = () => props.changeFilter("active")
-    const onCompletedClickHandler = () => props.changeFilter("completed")
+    const onAllClickHandler = () => props.changeFilter("all", props.id)
+    const onActiveClickHandler = () => props.changeFilter("active", props.id)
+    const onCompletedClickHandler = () => props.changeFilter("completed", props.id)
+    const remoteTodoList = () => props.remoteTodoList(props.id)
 
     return (
         <div>
-            <h3>{props.title}</h3>
+            <div>
+                <h3>{props.title}</h3>
+                <button onClick={remoteTodoList}>x</button>
+            </div>
             <div>
                 <input className={error ? "error" : ""}
                        value={title} onChange={onChangeHandler}
@@ -57,10 +63,10 @@ export function TodoList(props: PropsType) {
             <ul>
                 {
                     props.tasks.map(task => {
-                        const deleteTask = () => props.remoteTask(task.id)
+                        const deleteTask = () => props.remoteTask(task.id, props.id)
                         const onChangeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
                             let newIsDoneValue = e.currentTarget.checked
-                            props.changeStatus(task.id, newIsDoneValue)
+                            props.changeStatus(task.id, newIsDoneValue, props.id)
                         }
                         return <li className={task.isDone ? "is-done" : ""}>
                             <input type="checkbox" checked={task.isDone} onChange={onChangeTaskStatus}/>
