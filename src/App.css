@@ -16,8 +16,8 @@
 }
 
 .error {
-  border: red 2px solid;
-  outline: none;
+    border: red 2px solid;
+    outline: none;
 }
 
 .error-message {
@@ -25,9 +25,15 @@
 }
 
 .active-filter {
-  background-color: aquamarine;
+    background-color: aquamarine;
 }
 
 .is-done {
     opacity: 0.5;
+}
+
+.title-wrap {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }

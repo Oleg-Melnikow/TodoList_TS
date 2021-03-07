@@ -1,5 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {FilterValueType} from "./App";
+import {FilterValueType, TaskType} from "./App";
 
 type PropsType = {
     id: string,
@@ -11,12 +11,6 @@ type PropsType = {
     changeStatus: (id: string, isDone: boolean, todoListId: string) => void,
     remoteTodoList: (todoListId: string) => void,
     filter: string
-}
-
-type TaskType = {
-    id: string,
-    title: string,
-    isDone: boolean
 }
 
 export function TodoList(props: PropsType) {
@@ -48,7 +42,7 @@ export function TodoList(props: PropsType) {
     const remoteTodoList = () => props.remoteTodoList(props.id)
 
     return (
-        <div>
+        <div className="title-wrap">
             <div>
                 <h3>{props.title}</h3>
                 <button onClick={remoteTodoList}>x</button>
@@ -77,9 +71,13 @@ export function TodoList(props: PropsType) {
                 }
             </ul>
             <div>
-                <button className={props.filter === "all" ? "active-filter" : ""} onClick={onAllClickHandler}>All</button>
-                <button className={props.filter === "active" ? "active-filter" : ""} onClick={onActiveClickHandler}>Active</button>
-                <button className={props.filter === "completed" ? "active-filter" : ""} onClick={onCompletedClickHandler}>Completed
+                <button className={props.filter === "all" ? "active-filter" : ""} onClick={onAllClickHandler}>All
+                </button>
+                <button className={props.filter === "active" ? "active-filter" : ""}
+                        onClick={onActiveClickHandler}>Active
+                </button>
+                <button className={props.filter === "completed" ? "active-filter" : ""}
+                        onClick={onCompletedClickHandler}>Completed
                 </button>
             </div>
         </div>
