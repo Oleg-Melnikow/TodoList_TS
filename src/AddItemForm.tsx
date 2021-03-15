@@ -11,7 +11,7 @@ export function AddItemForm(props: AddItemFormPropsType) {
 
     const addItem = () => {
         const trimmedTitle = title.trim()
-        if(trimmedTitle !== ""){
+        if (trimmedTitle !== "") {
             props.addItem(trimmedTitle)
             setTitle("")
         } else {
@@ -28,7 +28,7 @@ export function AddItemForm(props: AddItemFormPropsType) {
         e.key === "Enter" && addItem()
     }
 
-    return(
+    return (
         <div>
             <input value={title} onChange={onChangeHandler}
                    onKeyPress={onKeyPressHandler} className={error ? "error" : ""}/>

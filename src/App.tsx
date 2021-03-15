@@ -92,9 +92,16 @@ function App() {
     function changeTaskTitle(id: string, newTitle: string, todoListId: string) {
         let task = tasks[todoListId].find(t => t.id === id)
         if (task) {
-            debugger
             task.title = newTitle
             setTasks({...tasks})
+        }
+    }
+
+    function changeTodoListTitle(id: string, newTitle: string) {
+        let todoList = todoLists.find(tl => tl.id === id)
+        if (todoList) {
+            todoList.title = newTitle
+            setTodoLists([...todoLists])
         }
     }
 
@@ -116,6 +123,7 @@ function App() {
                                  changeFilter={changeFilter} addTask={addTask}
                                  changeStatus={changeStatus} filter={tl.filter}
                                  changeTaskTitle={changeTaskTitle}
+                                 changeTodoListTitle={changeTodoListTitle}
                                  remoteTodoList={remoteTodoList}/>
             })}
 

@@ -13,6 +13,7 @@ type PropsType = {
     changeStatus: (id: string, isDone: boolean, todoListId: string) => void,
     changeTaskTitle: (id: string, newTitle: string, todoListId: string) => void,
     remoteTodoList: (todoListId: string) => void,
+    changeTodoListTitle: (id: string, newTitle: string) => void,
     filter: string
 }
 
@@ -27,10 +28,12 @@ export function TodoList(props: PropsType) {
     const onCompletedClickHandler = () => props.changeFilter("completed", props.id)
     const remoteTodoList = () => props.remoteTodoList(props.id)
 
+    const changeTodoListTitle = (newTitle: string) => props.changeTodoListTitle(props.id, newTitle)
+
     return (
         <div>
             <div className="title-wrap">
-                <h3>{props.title}</h3>
+                <EditableSpan value={props.title} changeTitle={changeTodoListTitle}/>
                 <button onClick={remoteTodoList}>x</button>
             </div>
             <AddItemForm addItem={addTask}/>
