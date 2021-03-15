@@ -89,6 +89,15 @@ function App() {
         })
     }
 
+    function changeTaskTitle(id: string, newTitle: string, todoListId: string) {
+        let task = tasks[todoListId].find(t => t.id === id)
+        if (task) {
+            debugger
+            task.title = newTitle
+            setTasks({...tasks})
+        }
+    }
+
     return (
         <div className="App">
             <AddItemForm addItem={addTodoList}/>
@@ -106,6 +115,7 @@ function App() {
                                  remoteTask={remoteTask} id={tl.id}
                                  changeFilter={changeFilter} addTask={addTask}
                                  changeStatus={changeStatus} filter={tl.filter}
+                                 changeTaskTitle={changeTaskTitle}
                                  remoteTodoList={remoteTodoList}/>
             })}
 
