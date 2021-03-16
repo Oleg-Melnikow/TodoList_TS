@@ -34,7 +34,7 @@ export function TodoList(props: PropsType) {
 
     return (
         <div>
-            <div className="title-wrap">
+            <div>
                 <EditableSpan value={props.title} changeTitle={changeTodoListTitle}/>
                 <IconButton onClick={remoteTodoList}>
                     <Delete color={"secondary"}/>
@@ -63,7 +63,7 @@ export function TodoList(props: PropsType) {
                 }
             </ul>
             <div>
-                <Button  variant={props.filter === "all" ? "contained" : "text"} onClick={onAllClickHandler}>All
+                <Button variant={props.filter === "all" ? "contained" : "text"} onClick={onAllClickHandler}>All
                 </Button>
                 <Button color={"secondary"} variant={props.filter === "active" ? "contained" : "text"}
                         onClick={onActiveClickHandler}>Active
