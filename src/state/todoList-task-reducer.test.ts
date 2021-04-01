@@ -15,8 +15,8 @@ test("ids should be equals", () =>{
     const idFromTask = keys[0];
     const idFromTodoList = endTodoLIstState[0].id;
 
-    expect(idFromTask).toBe(action.id);
-    expect(idFromTodoList).toBe(action.id);
+    expect(idFromTask).toBe(action.todoListId);
+    expect(idFromTodoList).toBe(action.todoListId);
 })
 
 test("property with todoListId should be deleted", () =>{

@@ -40,23 +40,23 @@ export const taskReducer = (state: TaskStateType, action: ActionsType) => {
     switch (action.type) {
         case "REMOVE_TASK": {
             const copyState = {...state}
-            copyState[action.todoListId] = state[action.todoListId].filter(t => t.id !== action.taskId);
+            copyState[action.todoListId] = copyState[action.todoListId].filter(t => t.id !== action.taskId);
             return copyState;
         }
         case "ADD_TASK": {
-            const copyState = {...state}
             let newTask: TaskType = {id: v1(), title: action.title, isDone: false}
-            copyState[action.todoListId] = [newTask, ...state[action.todoListId]];
-            return copyState;
+            return {...state, [action.todoListId]: [newTask, ...state[action.todoListId]]};
         }
         case "CHANGE_TASK_STATUS": {
-            const copyState = {...state}
-            let task = copyState[action.todoListId].find(t => t.id === action.taskId);
-            if (task) {
-                task.isDone = action.isDone;
-                return copyState;
+            return {...state,
+                [action.todoListId]: state[action.todoListId].map(task => {
+                    if(task.id === action.taskId){
+                        return {...task, isDone: action.isDone}
+                    } else {
+                        return task
+                    }
+                })
             }
-            return state;
         }
         case "CHANGE_TASK_TITLE": {
             const copyState = {...state}
@@ -67,11 +67,12 @@ export const taskReducer = (state: TaskStateType, action: ActionsType) => {
             }
             return state;
         }
-        case "ADD_TODOLIST":
+        case "ADD_TODOLIST": {
             const copyState = {...state}
-            copyState[action.id] = [];
-            return  copyState;
-        case "REMOVE_TODOLIST":{
+            copyState[action.todoListId] = [];
+            return copyState;
+        }
+        case "REMOVE_TODOLIST": {
             const copyState = {...state}
             delete copyState[action.todoListId];
             return copyState;
