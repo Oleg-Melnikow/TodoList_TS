@@ -44,7 +44,7 @@ export function TodoList(props: PropsType) {
             <ul>
                 {
                     props.tasks.map(task => {
-                        const deleteTask = () => props.remoteTask(task.id, props.id)
+                        const deleteTask = () => props.remoteTask(props.id, task.id)
                         const onChangeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
                             let newIsDoneValue = e.currentTarget.checked
                             props.changeStatus(task.id, newIsDoneValue, props.id)
