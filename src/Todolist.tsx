@@ -10,7 +10,7 @@ type PropsType = {
     id: string,
     title: string,
     tasks: Array<TaskType>,
-    remoteTask: (id: string, todoListId: string) => void,
+    remoteTask: (todoListId: string, id: string) => void,
     changeFilter: (value: FilterValueType, todoListId: string) => void,
     addTask: (title: string, todoListId: string) => void,
     changeStatus: (id: string, isDone: boolean, todoListId: string) => void,
@@ -47,7 +47,7 @@ export const TodoList = React.memo((props: PropsType) => {
     }, [props.changeTodoListTitle, props.id])
 
     const onClickHandler = useCallback((taskId: string) => {
-        props.remoteTask(taskId, props.id)
+        props.remoteTask(props.id, taskId)
     }, [props.id, props.remoteTask])
 
     const onChangeHandler = useCallback((taskId: string, isDone: boolean) => {

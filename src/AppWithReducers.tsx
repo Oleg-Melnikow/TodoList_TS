@@ -6,7 +6,13 @@ import {AddItemForm} from "./AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Typography} from "@material-ui/core";
 import Toolbar from '@material-ui/core/Toolbar';
 import {Menu} from "@material-ui/icons";
-import {todoListReducer, AddTodoListAC, changeTodoListTitleAC, RemoveTodolistAC, changeTodoListFilterAC} from "./state/todoListReducer";
+import {
+    todoListReducer,
+    AddTodoListAC,
+    changeTodoListTitleAC,
+    RemoveTodolistAC,
+    changeTodoListFilterAC
+} from "./state/todoListReducer";
 import {taskReducer, removeTaskAC, addTaskAC, changeTaskStatusAC, changeTaskTitleAC} from "./state/taskReducer";
 
 export type FilterValueType = "all" | "active" | "completed";
@@ -48,12 +54,12 @@ export function AppWithReducers() {
     let todoListID_1 = v1()
     let todoListID_2 = v1()
 
-    let [todoLists, dispatchTodoLists] = useReducer(todoListReducer,[
+    let [todoLists, dispatchTodoLists] = useReducer(todoListReducer, [
         {id: todoListID_1, title: "What to learn", filter: "active"},
         {id: todoListID_2, title: "What to buy", filter: "completed"}
     ])
 
-    const [tasks, dispatchTasks] = useReducer(taskReducer,{
+    const [tasks, dispatchTasks] = useReducer(taskReducer, {
         [todoListID_1]: [
             {id: v1(), title: "HTML&CSS", isDone: true},
             {id: v1(), title: "JS", isDone: true},

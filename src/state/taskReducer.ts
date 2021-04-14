@@ -41,6 +41,7 @@ const initialState: TaskStateType = {};
 export const taskReducer = (state: TaskStateType = initialState, action: ActionsType) => {
     switch (action.type) {
         case "REMOVE_TASK": {
+            debugger
             const copyState = {...state}
             copyState[action.todoListId] = copyState[action.todoListId].filter(t => t.id !== action.taskId);
             return copyState;
@@ -50,9 +51,10 @@ export const taskReducer = (state: TaskStateType = initialState, action: Actions
             return {...state, [action.todoListId]: [newTask, ...state[action.todoListId]]};
         }
         case "CHANGE_TASK_STATUS": {
-            return {...state,
+            return {
+                ...state,
                 [action.todoListId]: state[action.todoListId].map(task => {
-                    if(task.id === action.taskId){
+                    if (task.id === action.taskId) {
                         return {...task, isDone: action.isDone}
                     } else {
                         return task
@@ -61,13 +63,14 @@ export const taskReducer = (state: TaskStateType = initialState, action: Actions
             }
         }
         case "CHANGE_TASK_TITLE": {
-            const copyState = {...state}
-            let task = copyState[action.todoListId].find(t => t.id === action.taskId);
-            if (task) {
-                task.title = action.title;
-                return copyState;
+            return {
+                ...state,
+                [action.todoListId]: state[action.todoListId]
+                    .map(task => task.id === action.taskId
+                        ? {...task, title: action.title}
+                        : task)
             }
-            return state;
+
         }
         case "ADD_TODOLIST": {
             const copyState = {...state}

@@ -1,6 +1,6 @@
 import {combineReducers, createStore} from 'redux';
-import { todoListReducer } from './todoListReducer';
-import { taskReducer } from './taskReducer';
+import {todoListReducer} from './todoListReducer';
+import {taskReducer} from './taskReducer';
 
 // объединяя reducer-ы с помощью combineReducers,
 // мы задаём структуру нашего единственного объекта-состояния
