@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, useCallback} from "react";
 import {FilterValueType, TaskType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
@@ -19,15 +19,23 @@ type PropsType = {
     filter: string
 }
 
-export function TodoList(props: PropsType) {
-
+export const TodoList = React.memo((props: PropsType) => {
+    console.log("Todolist called");
     function addTask(title: string) {
         props.addTask(title, props.id)
     }
 
-    const onAllClickHandler = () => props.changeFilter("all", props.id)
-    const onActiveClickHandler = () => props.changeFilter("active", props.id)
-    const onCompletedClickHandler = () => props.changeFilter("completed", props.id)
+    let tasksForTodoList = props.tasks
+    if (props.filter === "active") {
+        tasksForTodoList = tasksForTodoList.filter(t => !t.isDone)
+    }
+    if (props.filter === "completed") {
+        tasksForTodoList = tasksForTodoList.filter(t => t.isDone)
+    }
+
+    const onAllClickHandler = useCallback(() => props.changeFilter("all", props.id), [])
+    const onActiveClickHandler = useCallback(() => props.changeFilter("active", props.id), [])
+    const onCompletedClickHandler = useCallback(() => props.changeFilter("completed", props.id), [])
     const remoteTodoList = () => props.remoteTodoList(props.id)
 
     const changeTodoListTitle = (newTitle: string) => props.changeTodoListTitle(props.id, newTitle)
@@ -43,7 +51,7 @@ export function TodoList(props: PropsType) {
             <AddItemForm addItem={addTask}/>
             <ul>
                 {
-                    props.tasks.map(task => {
+                    tasksForTodoList.map(task => {
                         const deleteTask = () => props.remoteTask(props.id, task.id)
                         const onChangeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
                             let newIsDoneValue = e.currentTarget.checked
@@ -74,4 +82,4 @@ export function TodoList(props: PropsType) {
             </div>
         </div>
     )
-}
+})
