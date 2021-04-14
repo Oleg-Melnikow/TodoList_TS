@@ -7,25 +7,25 @@ import {Delete} from "@material-ui/icons";
 
 type TaskPropsType = {
     task: TaskType,
-    todoListId: string,
-    remoteTask: (id: string, todoListId: string) => void,
-    changeStatus: (id: string, isDone: boolean, todoListId: string) => void,
-    changeTaskTitle: (id: string, newTitle: string, todoListId: string) => void,
+    remoteTask: (id: string) => void,
+    changeStatus: (id: string, isDone: boolean) => void,
+    changeTaskTitle: (id: string, newTitle: string) => void,
 }
 
 export const Task = React.memo((props: TaskPropsType) => {
-
     let {id, title, isDone} = props.task
 
-    const deleteTask = () => props.remoteTask(props.todoListId, id)
+    const deleteTask = () => {
+        props.remoteTask(id)
+    }
     const onChangeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
-        let newIsDoneValue = e.currentTarget.checked
-        props.changeStatus(id, newIsDoneValue, props.todoListId)
+        props.changeStatus(id, e.currentTarget.checked)
     }
     const changeTaskTitle = (newTitle: string) => {
-        props.changeTaskTitle(id, newTitle, props.todoListId)
+        props.changeTaskTitle(id, newTitle)
     }
-    return <li key={id} className={isDone ? "is-done" : ""}>
+
+    return <li className={isDone ? "is-done" : ""}>
         <Checkbox checked={isDone} onChange={onChangeTaskStatus} style={{color: "green"}}/>
         <EditableSpan value={title} changeTitle={changeTaskTitle}/>
         <IconButton onClick={deleteTask}>

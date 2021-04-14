@@ -34,14 +34,29 @@ export const TodoList = React.memo((props: PropsType) => {
         tasksForTodoList = tasksForTodoList.filter(t => t.isDone)
     }
 
-    const onAllClickHandler = useCallback(() => props.changeFilter("all", props.id), [])
-    const onActiveClickHandler = useCallback(() => props.changeFilter("active", props.id), [])
-    const onCompletedClickHandler = useCallback(() => props.changeFilter("completed", props.id), [])
-    const remoteTodoList = () => props.remoteTodoList(props.id)
+    const onAllClickHandler = useCallback(() => props.changeFilter("all", props.id), [props.id])
+    const onActiveClickHandler = useCallback(() => props.changeFilter("active", props.id), [props.id])
+    const onCompletedClickHandler = useCallback(() => props.changeFilter("completed", props.id), [props.id])
+
+    const remoteTodoList = () => {
+        props.remoteTodoList(props.id)
+    }
 
     const changeTodoListTitle = useCallback((newTitle: string) => {
         props.changeTodoListTitle(props.id, newTitle)
     }, [props.changeTodoListTitle, props.id])
+
+    const onClickHandler = useCallback((taskId: string) => {
+        props.remoteTask(taskId, props.id)
+    }, [props.id, props.remoteTask])
+
+    const onChangeHandler = useCallback((taskId: string, isDone: boolean) => {
+        props.changeStatus(taskId, isDone, props.id)
+    }, [props.id, props.changeStatus])
+
+    const onTitleChangeHandler = useCallback((taskId: string, newTitle: string) => {
+        props.changeTaskTitle(taskId, newTitle, props.id)
+    }, [props.id, props.changeTaskTitle])
 
     return (
         <div>
@@ -55,8 +70,8 @@ export const TodoList = React.memo((props: PropsType) => {
             <ul>
                 {
                     tasksForTodoList.map(task => {
-                        return <Task task={task} todoListId={props.id} remoteTask={props.remoteTask}
-                                     changeStatus={props.changeStatus} changeTaskTitle={props.changeTaskTitle}/>
+                        return <Task key={task.id} task={task} remoteTask={onClickHandler}
+                                     changeStatus={onChangeHandler} changeTaskTitle={onTitleChangeHandler}/>
                     })
                 }
             </ul>
