@@ -4,6 +4,7 @@ import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {Button, Checkbox, IconButton, TextField} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
+import {Task} from "./Task";
 
 type PropsType = {
     id: string,
@@ -21,9 +22,9 @@ type PropsType = {
 
 export const TodoList = React.memo((props: PropsType) => {
     console.log("Todolist called");
-    function addTask(title: string) {
+    const addTask = useCallback((title: string) => {
         props.addTask(title, props.id)
-    }
+    }, [props.addTask, props.id])
 
     let tasksForTodoList = props.tasks
     if (props.filter === "active") {
@@ -38,7 +39,9 @@ export const TodoList = React.memo((props: PropsType) => {
     const onCompletedClickHandler = useCallback(() => props.changeFilter("completed", props.id), [])
     const remoteTodoList = () => props.remoteTodoList(props.id)
 
-    const changeTodoListTitle = (newTitle: string) => props.changeTodoListTitle(props.id, newTitle)
+    const changeTodoListTitle = useCallback((newTitle: string) => {
+        props.changeTodoListTitle(props.id, newTitle)
+    }, [props.changeTodoListTitle, props.id])
 
     return (
         <div>
@@ -52,21 +55,8 @@ export const TodoList = React.memo((props: PropsType) => {
             <ul>
                 {
                     tasksForTodoList.map(task => {
-                        const deleteTask = () => props.remoteTask(props.id, task.id)
-                        const onChangeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
-                            let newIsDoneValue = e.currentTarget.checked
-                            props.changeStatus(task.id, newIsDoneValue, props.id)
-                        }
-                        const changeTaskTitle = (newTitle: string) => {
-                            props.changeTaskTitle(task.id, newTitle, props.id)
-                        }
-                        return <li key={task.id} className={task.isDone ? "is-done" : ""}>
-                            <Checkbox checked={task.isDone} onChange={onChangeTaskStatus} style={{color: "green"}}/>
-                            <EditableSpan value={task.title} changeTitle={changeTaskTitle}/>
-                            <IconButton onClick={deleteTask}>
-                                <Delete color={"secondary"}/>
-                            </IconButton>
-                        </li>
+                        return <Task task={task} todoListId={props.id} remoteTask={props.remoteTask}
+                                     changeStatus={props.changeStatus} changeTaskTitle={props.changeTaskTitle}/>
                     })
                 }
             </ul>
