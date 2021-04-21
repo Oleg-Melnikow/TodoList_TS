@@ -5,7 +5,7 @@ import {EditableSpan} from "./EditableSpan";
 import {Delete} from "@material-ui/icons";
 
 
-type TaskPropsType = {
+export type TaskPropsType = {
     task: TaskType,
     remoteTask: (id: string) => void,
     changeStatus: (id: string, isDone: boolean) => void,
