@@ -1,8 +1,6 @@
 import React from 'react';
 import { AddItemForm, AddItemFormPropsType } from '../AddItemForm';
-//@ts-ignore
 import {action} from "@storybook/addon-actions";
-//@ts-ignore
 import {Meta, Story} from "@storybook/react";
 
 export default {

@@ -1,8 +1,4 @@
 import React from 'react';
-//@ts-ignore
-import {Meta, Story} from '@storybook/react';
-//@ts-ignore
-import {action} from "@storybook/addon-actions";
 import {Provider} from "react-redux";
 import {AppRootStateType} from "../../state/store";
 import {combineReducers, createStore} from "redux";

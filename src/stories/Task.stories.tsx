@@ -1,7 +1,5 @@
 import React from 'react';
-//@ts-ignore
 import {action} from "@storybook/addon-actions";
-//@ts-ignore
 import {Meta, Story} from "@storybook/react";
 import {Task, TaskPropsType} from "../Task";
 
