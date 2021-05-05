@@ -36,7 +36,7 @@ type TaskType = {
     deadline: string,
     id: string,
     todoListId: string,
-    order: string,
+    order: number,
     addedDate: string
 }
 
@@ -46,32 +46,42 @@ type ResponseTaskType = {
     error: string | null
 }
 
+type UpdateTaskType = {
+    title: string
+    description: string
+    completed: boolean
+    status: number
+    priority: number
+    startDate: string
+    deadline: string
+}
+
 export const todolistAPI = {
-    createTodoList(title: string){
-        return instance.post<ResponseType<TodolistType>>("todo-lists/",{title})
+    createTodoList(title: string) {
+        return instance.post<ResponseType<{ item: TodolistType }>>("todo-lists/", {title})
     },
-    getTodoLists(){
+    getTodoLists() {
         return instance.get<TodolistType[]>("todo-lists/")
     },
     updateTodolist(todolistId: string, title: string) {
         return instance.put<ResponseType>(`todo-lists/${todolistId}`, {title: title})
     },
-    deleteTodoList(todolistId: string){
-        return  instance.delete<ResponseType>(`todo-lists/${todolistId}`)
+    deleteTodoList(todolistId: string) {
+        return instance.delete<ResponseType>(`todo-lists/${todolistId}`)
     }
 }
 
 export const tasksAPI = {
-    createTask(todolistId: string){
-        return instance.post<ResponseType<TaskType>>(`todo-lists/${todolistId}/tasks`,{title: "newJS hello"})
+    createTask(todolistId: string, title: string) {
+        return instance.post<ResponseType<TaskType>>(`todo-lists/${todolistId}/tasks`, {title})
     },
-    getTasks(todolistId: string){
+    getTasks(todolistId: string) {
         return instance.get<ResponseTaskType>(`todo-lists/${todolistId}/tasks`)
     },
-    deleteTask(todolistId: string, taskId: string){
+    deleteTask(todolistId: string, taskId: string) {
         return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
     },
-    updateTaskTitle(todolistId: string, taskId: string, title: string){
-        return instance.put<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`, {title: title})
+    updateTaskTitle(todolistId: string, taskId: string, model: UpdateTaskType) {
+        return instance.put<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
     }
 }
