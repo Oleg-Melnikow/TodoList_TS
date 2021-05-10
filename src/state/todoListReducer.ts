@@ -110,7 +110,7 @@ export const setTodoLists = (todoLists: Array<TodoListType>): SetTodoListsAction
 
 type ThunkType = ThunkAction<void, AppRootStateType, unknown, ActionsType>
 
-export const setTodoListsTC = ():ThunkType => (dispatch,getState: () => AppRootStateType) => {
+export const setTodoListsTC = ():ThunkType => (dispatch, getState: () => AppRootStateType) => {
     todolistAPI.getTodoLists()
         .then((response) => {
             debugger
