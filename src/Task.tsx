@@ -1,8 +1,8 @@
 import React, {ChangeEvent} from "react";
-import {TaskType} from "./App";
 import {Checkbox, IconButton} from "@material-ui/core";
 import {EditableSpan} from "./EditableSpan";
 import {Delete} from "@material-ui/icons";
+import { TaskType } from "./api/todolist-api";
 
 
 export type TaskPropsType = {
@@ -13,7 +13,7 @@ export type TaskPropsType = {
 }
 
 export const Task = React.memo((props: TaskPropsType) => {
-    let {id, title, isDone} = props.task
+    let {id, title, completed} = props.task
 
     const deleteTask = () => {
         props.remoteTask(id)
@@ -25,8 +25,8 @@ export const Task = React.memo((props: TaskPropsType) => {
         props.changeTaskTitle(id, newTitle)
     }
 
-    return <li className={isDone ? "is-done" : ""}>
-        <Checkbox checked={isDone} onChange={onChangeTaskStatus} style={{color: "green"}}/>
+    return <li className={completed ? "is-done" : ""}>
+        <Checkbox checked={completed} onChange={onChangeTaskStatus} style={{color: "green"}}/>
         <EditableSpan value={title} changeTitle={changeTaskTitle}/>
         <IconButton onClick={deleteTask}>
             <Delete color={"secondary"}/>

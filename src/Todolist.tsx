@@ -1,10 +1,11 @@
-import React, {ChangeEvent, useCallback} from "react";
-import {FilterValueType, TaskType} from "./App";
+import React, {useCallback} from "react";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
-import {Button, Checkbox, IconButton, TextField} from "@material-ui/core";
+import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {Task} from "./Task";
+import {TaskType} from "./api/todolist-api";
+import {FilterValueType} from "./state/todoListReducer";
 
 type PropsType = {
     id: string,
@@ -28,10 +29,10 @@ export const TodoList = React.memo((props: PropsType) => {
 
     let tasksForTodoList = props.tasks
     if (props.filter === "active") {
-        tasksForTodoList = tasksForTodoList.filter(t => !t.isDone)
+        tasksForTodoList = tasksForTodoList.filter(t => !t.completed)
     }
     if (props.filter === "completed") {
-        tasksForTodoList = tasksForTodoList.filter(t => t.isDone)
+        tasksForTodoList = tasksForTodoList.filter(t => t.completed)
     }
 
     const onAllClickHandler = useCallback(() => props.changeFilter("all", props.id), [props.id])

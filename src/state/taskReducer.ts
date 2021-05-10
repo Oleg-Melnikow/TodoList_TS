@@ -1,6 +1,7 @@
-import {TaskStateType, TaskType} from "../App";
+import {TaskStateType} from "../App";
 import {v1} from "uuid";
 import {AddTodoListActionType, RemoveTodoListActionType} from "./todoListReducer";
+import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolist-api";
 
 export type removeTaskActionType = {
     type: "REMOVE_TASK",
@@ -47,7 +48,14 @@ export const taskReducer = (state: TaskStateType = initialState, action: Actions
             return copyState;
         }
         case "ADD_TASK": {
-            let newTask: TaskType = {id: v1(), title: action.title, isDone: false}
+            let newTask: TaskType = {
+                id: v1(),
+                title: action.title,
+                completed: true,
+                status: TaskStatuses.New,
+                todoListId: action.todoListId, description: '',
+                startDate: '', deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low
+            }
             return {...state, [action.todoListId]: [newTask, ...state[action.todoListId]]};
         }
         case "CHANGE_TASK_STATUS": {
@@ -55,7 +63,7 @@ export const taskReducer = (state: TaskStateType = initialState, action: Actions
                 ...state,
                 [action.todoListId]: state[action.todoListId].map(task => {
                     if (task.id === action.taskId) {
-                        return {...task, isDone: action.isDone}
+                        return {...task, completed: action.isDone}
                     } else {
                         return task
                     }

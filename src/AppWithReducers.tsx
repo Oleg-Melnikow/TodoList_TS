@@ -14,20 +14,9 @@ import {
     changeTodoListFilterAC
 } from "./state/todoListReducer";
 import {taskReducer, removeTaskAC, addTaskAC, changeTaskStatusAC, changeTaskTitleAC} from "./state/taskReducer";
+import {TaskStatuses, TaskType} from "./api/todolist-api";
 
 export type FilterValueType = "all" | "active" | "completed";
-
-export type TodoListType = {
-    id: string,
-    title: string,
-    filter: FilterValueType
-}
-
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-}
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>
@@ -55,19 +44,22 @@ export function AppWithReducers() {
     let todoListID_2 = v1()
 
     let [todoLists, dispatchTodoLists] = useReducer(todoListReducer, [
-        {id: todoListID_1, title: "What to learn", filter: "active"},
-        {id: todoListID_2, title: "What to buy", filter: "completed"}
+        {id: todoListID_1, title: "What to learn", filter: "active", addedDate: "", order: 0},
+        {id: todoListID_2, title: "What to buy", filter: "completed", addedDate: "", order: 0}
     ])
 
     const [tasks, dispatchTasks] = useReducer(taskReducer, {
         [todoListID_1]: [
-            {id: v1(), title: "HTML&CSS", isDone: true},
-            {id: v1(), title: "JS", isDone: true},
-            {id: v1(), title: "ReactJS", isDone: false}
+            {id: v1(), title: "HTML&CSS", completed: false, order: 1, addedDate: "",
+                todoListId: todoListID_1, status: TaskStatuses.Completed, startDate: "", priority: 1, deadline: "", description: ""},
+            {id: v1(), title: "JS", completed: false, order: TaskStatuses.InProgress, addedDate: "",
+                todoListId: todoListID_1, status: 1, startDate: "", priority: 1, deadline: "", description: ""},
         ],
         [todoListID_2]: [
-            {id: v1(), title: "Book", isDone: true},
-            {id: v1(), title: "Journal", isDone: false}
+            {id: v1(), title: "Book", completed: false, order: 1, addedDate: "",
+                todoListId: todoListID_2, status: TaskStatuses.InProgress, startDate: "", priority: 1, deadline: "", description: ""},
+            {id: v1(), title: "Journal", completed: false, order: 1, addedDate: "",
+                todoListId: todoListID_2, status: TaskStatuses.New, startDate: "", priority: 1, deadline: "", description: ""}
         ]
     })
 
@@ -114,10 +106,10 @@ export function AppWithReducers() {
 
                         let tasksForTodoList = tasks[tl.id]
                         if (tl.filter === "active") {
-                            tasksForTodoList = tasksForTodoList.filter(t => !t.isDone)
+                            tasksForTodoList = tasksForTodoList.filter(t => !t.completed)
                         }
                         if (tl.filter === "completed") {
-                            tasksForTodoList = tasksForTodoList.filter(t => t.isDone)
+                            tasksForTodoList = tasksForTodoList.filter(t => t.completed)
                         }
 
                         return <Grid item>
