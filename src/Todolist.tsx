@@ -4,7 +4,7 @@ import {EditableSpan} from "./EditableSpan";
 import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {Task} from "./Task";
-import {TaskType} from "./api/todolist-api";
+import {TaskStatuses, TaskType} from "./api/todolist-api";
 import {FilterValueType} from "./state/todoListReducer";
 import {useDispatch} from "react-redux";
 import {addTaskTC, setTasksTC} from "./state/taskReducer";
@@ -16,7 +16,7 @@ type PropsType = {
     remoteTask: (todoListId: string, id: string) => void,
     changeFilter: (value: FilterValueType, todoListId: string) => void,
     addTask: (title: string, todoListId: string) => void,
-    changeStatus: (id: string, isDone: boolean, todoListId: string) => void,
+    changeStatus: (taskId: string, status: TaskStatuses, todoListId: string) => void,
     changeTaskTitle: (id: string, newTitle: string, todoListId: string) => void,
     remoteTodoList: (todoListId: string) => void,
     changeTodoListTitle: (id: string, newTitle: string) => void,
@@ -33,11 +33,11 @@ export const TodoList = React.memo((props: PropsType) => {
     }, [props.addTask, props.id])
 
     let tasksForTodoList = props.tasks
-    if (props.filter === "active") {
-        tasksForTodoList = tasksForTodoList.filter(t => !t.completed)
+    if (props.filter === 'active') {
+        tasksForTodoList = props.tasks.filter(t => t.status === TaskStatuses.New)
     }
-    if (props.filter === "completed") {
-        tasksForTodoList = tasksForTodoList.filter(t => t.completed)
+    if (props.filter === 'completed') {
+        tasksForTodoList = props.tasks.filter(t => t.status === TaskStatuses.Completed)
     }
 
     const onAllClickHandler = useCallback(() => props.changeFilter("all", props.id), [props.id])
@@ -56,8 +56,8 @@ export const TodoList = React.memo((props: PropsType) => {
         props.remoteTask(props.id, taskId)
     }, [props.id, props.remoteTask])
 
-    const onChangeHandler = useCallback((taskId: string, isDone: boolean) => {
-        props.changeStatus(taskId, isDone, props.id)
+    const onChangeHandler = useCallback((taskId: string, status: TaskStatuses) => {
+        props.changeStatus(taskId, status, props.id)
     }, [props.id, props.changeStatus])
 
     const onTitleChangeHandler = useCallback((taskId: string, newTitle: string) => {
