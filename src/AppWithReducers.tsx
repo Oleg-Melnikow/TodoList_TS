@@ -13,8 +13,15 @@ import {
     RemoveTodolistAC,
     changeTodoListFilterAC
 } from "./state/todoListReducer";
-import {taskReducer, removeTaskAC, addTaskAC, changeTaskStatusAC, changeTaskTitleAC} from "./state/taskReducer";
+import {
+    taskReducer,
+    removeTaskAC,
+    changeTaskStatusAC,
+    changeTaskTitleAC,
+    addTaskTC
+} from "./state/taskReducer";
 import {TaskStatuses, TaskType} from "./api/todolist-api";
+import {useDispatch} from "react-redux";
 
 export type FilterValueType = "all" | "active" | "completed";
 
@@ -24,12 +31,14 @@ export type TaskStateType = {
 
 export function AppWithReducers() {
 
+    const dispatch = useDispatch()
+
     function remoteTask(id: string, todoListId: string) {
         dispatchTasks(removeTaskAC(id, todoListId))
     }
 
     function addTask(title: string, todoListId: string) {
-        dispatchTasks(addTaskAC(todoListId, title))
+        dispatch(addTaskTC(todoListId, title))
     }
 
     function changeStatus(id: string, isDone: boolean, todoListId: string) {
