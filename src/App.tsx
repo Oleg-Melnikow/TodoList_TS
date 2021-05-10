@@ -30,16 +30,16 @@ function App() {
     }
 
     function addTask(title: string, todoListId: string) {
-        let newTask: TaskType = {id: v1(), title: title, completed: false, order: 1, addedDate: "",
-        todoListId, status: 1, startDate: "", priority: 1, deadline: "", description: ""}
+        let newTask: TaskType = {id: v1(), title: title, status: TaskStatuses.New, order: 1, addedDate: "",
+        todoListId, startDate: "", priority: 1, deadline: "", description: ""}
         tasks[todoListId] = [newTask, ...tasks[todoListId]]
         setTasks({...tasks})
     }
 
-    function changeStatus(id: string, isDone: boolean, todoListId: string) {
+    function changeStatus(id: string, status: TaskStatuses, todoListId: string) {
         let task = tasks[todoListId].find(t => t.id === id)
         if (task) {
-            task.completed = isDone
+            task.status = status
             setTasks({...tasks})
         }
     }
@@ -61,15 +61,15 @@ function App() {
 
     const [tasks, setTasks] = useState<TaskStateType>({
         [todoListID_1]: [
-            {id: v1(), title: "HTML&CSS", completed: false, order: 1, addedDate: "",
+            {id: v1(), title: "HTML&CSS", order: 1, addedDate: "",
                 todoListId: todoListID_1, status: TaskStatuses.Completed, startDate: "", priority: 1, deadline: "", description: ""},
-            {id: v1(), title: "JS", completed: false, order: TaskStatuses.InProgress, addedDate: "",
+            {id: v1(), title: "JS", order: TaskStatuses.InProgress, addedDate: "",
                 todoListId: todoListID_1, status: 1, startDate: "", priority: 1, deadline: "", description: ""},
         ],
         [todoListID_2]: [
-            {id: v1(), title: "Book", completed: false, order: 1, addedDate: "",
+            {id: v1(), title: "Book", order: 1, addedDate: "",
                 todoListId: todoListID_2, status: TaskStatuses.InProgress, startDate: "", priority: 1, deadline: "", description: ""},
-            {id: v1(), title: "Journal", completed: false, order: 1, addedDate: "",
+            {id: v1(), title: "Journal", order: 1, addedDate: "",
                 todoListId: todoListID_2, status: TaskStatuses.New, startDate: "", priority: 1, deadline: "", description: ""}
         ]
     })
@@ -122,10 +122,10 @@ function App() {
 
                         let tasksForTodoList = tasks[tl.id]
                         if (tl.filter === "active") {
-                            tasksForTodoList = tasksForTodoList.filter(t => !t.completed)
+                            tasksForTodoList = tasksForTodoList.filter(t => !t.status)
                         }
                         if (tl.filter === "completed") {
-                            tasksForTodoList = tasksForTodoList.filter(t => t.completed)
+                            tasksForTodoList = tasksForTodoList.filter(t => t.status)
                         }
 
                         return <Grid item>

@@ -34,19 +34,19 @@ export function AppWithReducers() {
     const dispatch = useDispatch()
 
     function remoteTask(id: string, todoListId: string) {
-        dispatchTasks(removeTaskAC(id, todoListId))
+        //dispatchTasks(removeTaskAC(id, todoListId))
     }
 
     function addTask(title: string, todoListId: string) {
         dispatch(addTaskTC(todoListId, title))
     }
 
-    function changeStatus(id: string, isDone: boolean, todoListId: string) {
-        dispatchTasks(changeTaskStatusAC(todoListId, id, isDone))
+    function changeStatus(id: string, status: TaskStatuses, todoListId: string) {
+        //dispatchTasks(changeTaskStatusAC(todoListId, id, isDone))
     }
 
     function changeTaskTitle(id: string, newTitle: string, todoListId: string) {
-        dispatchTasks(changeTaskTitleAC(todoListId, id, newTitle))
+        //dispatchTasks(changeTaskTitleAC(todoListId, id, newTitle))
     }
 
     let todoListID_1 = v1()
@@ -59,15 +59,15 @@ export function AppWithReducers() {
 
     const [tasks, dispatchTasks] = useReducer(taskReducer, {
         [todoListID_1]: [
-            {id: v1(), title: "HTML&CSS", completed: false, order: 1, addedDate: "",
+            {id: v1(), title: "HTML&CSS", order: 1, addedDate: "",
                 todoListId: todoListID_1, status: TaskStatuses.Completed, startDate: "", priority: 1, deadline: "", description: ""},
-            {id: v1(), title: "JS", completed: false, order: TaskStatuses.InProgress, addedDate: "",
+            {id: v1(), title: "JS", order: TaskStatuses.InProgress, addedDate: "",
                 todoListId: todoListID_1, status: 1, startDate: "", priority: 1, deadline: "", description: ""},
         ],
         [todoListID_2]: [
-            {id: v1(), title: "Book", completed: false, order: 1, addedDate: "",
+            {id: v1(), title: "Book", order: 1, addedDate: "",
                 todoListId: todoListID_2, status: TaskStatuses.InProgress, startDate: "", priority: 1, deadline: "", description: ""},
-            {id: v1(), title: "Journal", completed: false, order: 1, addedDate: "",
+            {id: v1(), title: "Journal", order: 1, addedDate: "",
                 todoListId: todoListID_2, status: TaskStatuses.New, startDate: "", priority: 1, deadline: "", description: ""}
         ]
     })
@@ -115,10 +115,10 @@ export function AppWithReducers() {
 
                         let tasksForTodoList = tasks[tl.id]
                         if (tl.filter === "active") {
-                            tasksForTodoList = tasksForTodoList.filter(t => !t.completed)
+                            tasksForTodoList = tasksForTodoList.filter(t => !t.status)
                         }
                         if (tl.filter === "completed") {
-                            tasksForTodoList = tasksForTodoList.filter(t => t.completed)
+                            tasksForTodoList = tasksForTodoList.filter(t => t.status)
                         }
 
                         return <Grid item>

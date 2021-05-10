@@ -30,13 +30,13 @@ const Template: Story<TaskPropsType> = (args: TaskPropsType) => <Task {...args} 
 export const TaskExample = Template.bind({});
 TaskExample.args = {
   ...baseArg,
-  task: {id: v1(), title: "JS", completed: false, order: TaskStatuses.InProgress, addedDate: "",
+  task: {id: v1(), title: "JS", order: TaskStatuses.InProgress, addedDate: "",
     todoListId: "todolistId1", status: 1, startDate: "", priority: 1, deadline: "", description: ""}
 }
 
 export const TaskIsNotDoneExample = TaskExample.bind({});
 TaskIsNotDoneExample.args = {
   ...baseArg,
-  task: {id: v1(), title: "JS", completed: false, order: TaskStatuses.InProgress, addedDate: "",
+  task: {id: v1(), title: "JS", order: TaskStatuses.InProgress, addedDate: "",
     todoListId: "todolistId1", status: 1, startDate: "", priority: 1, deadline: "", description: ""},
 }
