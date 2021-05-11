@@ -6,16 +6,17 @@ import {AppBar, Button, Container, Grid, IconButton, Paper, Typography} from "@m
 import Toolbar from '@material-ui/core/Toolbar';
 import {Menu} from "@material-ui/icons";
 import {
-    AddTodoListAC,
-    changeTodoListTitleAC,
-    RemoveTodolistAC,
     changeTodoListFilterAC,
-    TodoListDomainType, FilterValueType, setTodoListsTC
+    TodoListDomainType,
+    FilterValueType,
+    setTodoListsTC,
+    updateTodoListTitleTC,
+    createTodoListsTC,
+    deleteTodoListsTC
 } from "./state/todoListReducer";
 import {
-    changeTaskTitleAC,
     deleteTasksTC,
-    addTaskTC, updateTaskStatusTC
+    addTaskTC, updateTaskTC
 } from "./state/taskReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
@@ -45,21 +46,19 @@ export function AppWithRedux() {
     }, [dispatch])
 
     const changeStatus = useCallback((taskId: string, status: TaskStatuses, todoListId: string) => {
-        dispatch(updateTaskStatusTC(taskId, status, todoListId))
+        dispatch(updateTaskTC(taskId, {status}, todoListId))
     }, [dispatch])
 
-    const changeTaskTitle = useCallback((id: string, newTitle: string, todoListId: string) => {
-        dispatch(changeTaskTitleAC(todoListId, id, newTitle))
+    const changeTaskTitle = useCallback((taskId: string, newTitle: string, todoListId: string) => {
+        dispatch(updateTaskTC(taskId, {title: newTitle}, todoListId))
     }, [dispatch])
 
     const addTodoList = useCallback((title: string) => {
-        let action = AddTodoListAC(title);
-        dispatch(action);
+        dispatch(createTodoListsTC(title));
     }, [dispatch])
 
     const remoteTodoList = useCallback((todoListId: string) => {
-        let action = RemoveTodolistAC(todoListId);
-        dispatch(action);
+        dispatch(deleteTodoListsTC(todoListId));
     }, [dispatch])
 
 
@@ -68,7 +67,7 @@ export function AppWithRedux() {
     }, [dispatch])
 
     const changeTodoListTitle = useCallback((id: string, newTitle: string) => {
-        dispatch(changeTodoListTitleAC(id, newTitle))
+        dispatch(updateTodoListTitleTC(id, newTitle))
     }, [dispatch])
 
     return (
