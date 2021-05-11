@@ -16,8 +16,7 @@ import {
 import {
     taskReducer,
     removeTaskAC,
-    changeTaskStatusAC,
-    changeTaskTitleAC,
+    updateTaskAC,
     addTaskTC
 } from "./state/taskReducer";
 import {TaskStatuses, TaskType} from "./api/todolist-api";
@@ -34,7 +33,7 @@ export function AppWithReducers() {
     const dispatch = useDispatch()
 
     function remoteTask(id: string, todoListId: string) {
-        //dispatchTasks(removeTaskAC(id, todoListId))
+        dispatchTasks(removeTaskAC(id, todoListId))
     }
 
     function addTask(title: string, todoListId: string) {
@@ -42,11 +41,11 @@ export function AppWithReducers() {
     }
 
     function changeStatus(id: string, status: TaskStatuses, todoListId: string) {
-        //dispatchTasks(changeTaskStatusAC(todoListId, id, isDone))
+        dispatchTasks(updateTaskAC(todoListId, id, {status}))
     }
 
     function changeTaskTitle(id: string, newTitle: string, todoListId: string) {
-        //dispatchTasks(changeTaskTitleAC(todoListId, id, newTitle))
+        dispatchTasks(updateTaskAC(todoListId, id, {title: newTitle}))
     }
 
     let todoListID_1 = v1()
@@ -73,7 +72,7 @@ export function AppWithReducers() {
     })
 
     function addTodoList(title: string) {
-        let action = AddTodoListAC(title);
+        let action = AddTodoListAC({id: v1(), addedDate: "", order: 0, title});
         dispatchTodoLists(action);
         dispatchTasks(action);
     }
