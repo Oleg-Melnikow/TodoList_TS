@@ -1,7 +1,7 @@
 import {todolistAPI, TodoListType} from "../api/todolist-api";
 import {ThunkAction} from "redux-thunk";
 import {AppRootStateType} from "./store";
-import {setAppStatusAC, setAppStatusActionType} from "./appReducer";
+import {setAppErrorAC, setAppErrorActionType, setAppStatusAC, setAppStatusActionType} from "./appReducer";
 
 export type RemoveTodoListActionType = {
     type: "REMOVE_TODOLIST",
@@ -24,7 +24,8 @@ type ActionsType =
     | ReturnType<typeof changeTodoListTitleAC>
     | ReturnType<typeof changeTodoListFilterAC>
     | SetTodoListsActionType
-    | setAppStatusActionType;
+    | setAppStatusActionType
+    | setAppErrorActionType;
 
 const initialState: Array<TodoListDomainType> = [];
 
@@ -96,8 +97,17 @@ export const createTodoListsTC = (title: string): ThunkType => (dispatch, getSta
     dispatch(setAppStatusAC("loading"));
     todolistAPI.createTodoList(title)
         .then((response) => {
-            dispatch(AddTodoListAC(response.data.data.item));
-            dispatch(setAppStatusAC("succeeded"));
+            if (response.data.resultCode === 0) {
+                dispatch(AddTodoListAC(response.data.data.item));
+                dispatch(setAppStatusAC("succeeded"));
+            } else {
+                if (response.data.messages.length) {
+                    dispatch(setAppErrorAC(response.data.messages[0]))
+                } else {
+                    dispatch(setAppErrorAC('Some error occurred'))
+                }
+                dispatch(setAppStatusAC('failed'))
+            }
         })
 }
 
