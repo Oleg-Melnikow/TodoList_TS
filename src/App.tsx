@@ -55,8 +55,8 @@ function App() {
     let todoListID_2 = v1()
 
     let [todoLists, setTodoLists] = useState<Array<TodoListDomainType>>([
-        {id: todoListID_1, title: "What to learn", filter: "active", addedDate: "", order: 0},
-        {id: todoListID_2, title: "What to buy", filter: "completed", addedDate: "", order: 0}
+        {id: todoListID_1, title: "What to learn", filter: "active", addedDate: "", order: 0, entityStatus: "idle"},
+        {id: todoListID_2, title: "What to buy", filter: "completed", addedDate: "", order: 0, entityStatus: "idle"}
     ])
 
     const [tasks, setTasks] = useState<TaskStateType>({
@@ -76,7 +76,7 @@ function App() {
 
     function addTodoList(title: string) {
         let newTodoListId = v1();
-        let newTodoList: TodoListDomainType = {id: newTodoListId, title, order: 1, addedDate: "", filter: "all"};
+        let newTodoList: TodoListDomainType = {id: newTodoListId, title, order: 1, addedDate: "", filter: "all", entityStatus: "idle"};
         setTodoLists([newTodoList, ...todoLists])
         setTasks({
             ...tasks,
@@ -132,6 +132,7 @@ function App() {
                             <Paper style={{padding: "10px"}}>
                                 <TodoList key={tl.id} title={tl.title} tasks={tasksForTodoList}
                                           remoteTask={remoteTask} id={tl.id}
+                                          entityStatus={tl.entityStatus}
                                           changeFilter={changeFilter} addTask={addTask}
                                           changeStatus={changeStatus} filter={tl.filter}
                                           changeTaskTitle={changeTaskTitle}
