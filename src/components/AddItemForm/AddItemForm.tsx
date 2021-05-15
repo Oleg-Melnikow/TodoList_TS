@@ -1,9 +1,10 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import { IconButton, TextField} from "@material-ui/core";
+import {IconButton, TextField} from "@material-ui/core";
 import {AddBox} from "@material-ui/icons";
 
 export type AddItemFormPropsType = {
-    addItem: (title: string) => void
+    addItem: (title: string) => void,
+    disabled?: boolean
 }
 
 export const AddItemForm = React.memo(function (props: AddItemFormPropsType) {
@@ -33,8 +34,9 @@ export const AddItemForm = React.memo(function (props: AddItemFormPropsType) {
     return (
         <div>
             <TextField id="outlined-basic" label="Type value" variant="outlined" error={!!error} helperText={error}
-                       value={title} onChange={onChangeHandler} onKeyPress={onKeyPressHandler}/>
-            <IconButton onClick={addItem}>
+                       value={title} onChange={onChangeHandler} onKeyPress={onKeyPressHandler}
+                       disabled={props.disabled}/>
+            <IconButton onClick={addItem} disabled={props.disabled}>
                 <AddBox style={{color: "#0ab400"}}/>
             </IconButton>
         </div>

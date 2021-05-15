@@ -102,6 +102,7 @@ export function AppWithRedux() {
                                           changeFilter={changeFilter} addTask={addTask}
                                           changeStatus={changeStatus} filter={tl.filter}
                                           changeTaskTitle={changeTaskTitle}
+                                          entityStatus={tl.entityStatus}
                                           changeTodoListTitle={changeTodoListTitle}
                                           remoteTodoList={remoteTodoList}/>
                             </Paper>
