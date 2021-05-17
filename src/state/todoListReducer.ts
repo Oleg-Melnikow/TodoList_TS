@@ -58,6 +58,7 @@ export const todoListReducer = (state: Array<TodoListDomainType> = initialState,
         case 'SET-TODO_LISTS':
             return action.todoLists.map(tl => ({...tl, filter: 'all', entityStatus: "idle"}))
         case "CHANGE-TODOLISTS_ENTITY_STATUS":
+            debugger
             return state.map(tl => tl.id === action.id ? {...tl, entityStatus: action.entityStatus} : tl)
         default:
             return state
@@ -131,6 +132,7 @@ export const createTodoListsTC = (title: string): ThunkType => (dispatch, getSta
 
 export const deleteTodoListsTC = (todolistId: string): ThunkType => (dispatch, getState: () => AppRootStateType) => {
     dispatch(setAppStatusAC("loading"));
+    debugger
     dispatch(changeTodolistEntityStatusAC(todolistId,"loading"))
     todolistAPI.deleteTodoList(todolistId)
         .then((response) => {

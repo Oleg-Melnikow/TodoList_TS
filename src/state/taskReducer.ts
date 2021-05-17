@@ -3,7 +3,8 @@ import {tasksAPI, TaskType, UpdateTaskType} from "../api/todolist-api";
 import {ThunkAction} from "redux-thunk";
 import {AppRootStateType} from "./store";
 import {TaskStateType} from "../AppWithRedux";
-import {setAppErrorAC, setAppErrorActionType, setAppStatusAC, setAppStatusActionType} from "./appReducer";
+import { setAppErrorActionType, setAppStatusAC, setAppStatusActionType} from "./appReducer";
+import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 
 type ActionsType =
     ReturnType<typeof removeTaskAC>
@@ -107,13 +108,11 @@ export const addTaskTC = (todoListId: string, taskTitle: string): ThunkType =>
                     dispatch(addTaskAC(response.data.data.item));
                     dispatch(setAppStatusAC("succeeded"));
                 } else {
-                    if (response.data.messages.length) {
-                        dispatch(setAppErrorAC(response.data.messages[0]))
-                    } else {
-                        dispatch(setAppErrorAC('Some error occurred'))
-                    }
-                    dispatch(setAppStatusAC('failed'))
+                    handleServerAppError(response.data, dispatch)
                 }
+            })
+            .catch(error => {
+                handleServerNetworkError(error, dispatch)
             })
     }
 

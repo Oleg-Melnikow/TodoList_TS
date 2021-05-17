@@ -65,13 +65,13 @@ export const TodoList = React.memo((props: PropsType) => {
     const onTitleChangeHandler = useCallback((taskId: string, newTitle: string) => {
         props.changeTaskTitle(taskId, newTitle, props.id)
     }, [props.id, props.changeTaskTitle])
-
+    debugger
     return (
         <div>
             <div>
                 <EditableSpan value={props.title} changeTitle={changeTodoListTitle}/>
-                <IconButton onClick={remoteTodoList} disabled={props.entityStatus === "loading"}>
-                    <Delete color={"secondary"}/>
+                <IconButton onClick={remoteTodoList} disabled={props.entityStatus === "loading"} color={"secondary"}>
+                    <Delete/>
                 </IconButton>
             </div>
             <AddItemForm addItem={addTask} disabled={props.entityStatus === "loading"}/>
