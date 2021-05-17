@@ -16,18 +16,13 @@ import {
 } from "./state/todoListReducer";
 import {
     deleteTasksTC,
-    addTaskTC, updateTaskTC
+    addTaskTC, updateTaskTC, TaskStateType
 } from "./state/taskReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
-import {TaskStatuses, TaskType} from "./api/todolist-api";
+import {TaskStatuses} from "./api/todolist-api";
 import {RequestStatusType} from "./state/appReducer";
 import {ErrorSnackbar} from "./components/ErrorSnackbar/ErrorSnackbar";
-
-
-export type TaskStateType = {
-    [key: string]: Array<TaskType>
-}
 
 export function AppWithRedux() {
 

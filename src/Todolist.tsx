@@ -4,16 +4,16 @@ import {EditableSpan} from "./components/EditableSpan/EditableSpan";
 import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {Task} from "./Task";
-import {TaskStatuses, TaskType} from "./api/todolist-api";
+import {TaskStatuses} from "./api/todolist-api";
 import {FilterValueType} from "./state/todoListReducer";
 import {useDispatch} from "react-redux";
-import {addTaskTC, setTasksTC} from "./state/taskReducer";
+import {addTaskTC, setTasksTC, TaskDomainType} from "./state/taskReducer";
 import {RequestStatusType} from "./state/appReducer";
 
 type PropsType = {
     id: string,
     title: string,
-    tasks: Array<TaskType>,
+    tasks: Array<TaskDomainType>,
     remoteTask: (todoListId: string, id: string) => void,
     changeFilter: (value: FilterValueType, todoListId: string) => void,
     addTask: (title: string, todoListId: string) => void,
@@ -65,11 +65,11 @@ export const TodoList = React.memo((props: PropsType) => {
     const onTitleChangeHandler = useCallback((taskId: string, newTitle: string) => {
         props.changeTaskTitle(taskId, newTitle, props.id)
     }, [props.id, props.changeTaskTitle])
-    debugger
+
     return (
         <div>
             <div>
-                <EditableSpan value={props.title} changeTitle={changeTodoListTitle}/>
+                <EditableSpan value={props.title} changeTitle={changeTodoListTitle} disabled={props.entityStatus === "loading"}/>
                 <IconButton onClick={remoteTodoList} disabled={props.entityStatus === "loading"} color={"secondary"}>
                     <Delete/>
                 </IconButton>
