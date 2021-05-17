@@ -22,15 +22,15 @@ const initialGlobalState: AppRootStateType = {
     tasks: {
         ["todolistId1"]: [
             {id: v1(), title: "HTML&CSS", order: 1, addedDate: "",
-                todoListId: "todolistId1", status: TaskStatuses.Completed, startDate: "", priority: 1, deadline: "", description: ""},
+                todoListId: "todolistId1", status: TaskStatuses.Completed, startDate: "", priority: 1, deadline: "", description: "", entityStatus: "idle"},
             {id: v1(), title: "JS", order: TaskStatuses.InProgress, addedDate: "",
-                todoListId: "todolistId1", status: 1, startDate: "", priority: 1, deadline: "", description: ""}
+                todoListId: "todolistId1", status: 1, startDate: "", priority: 1, deadline: "", description: "", entityStatus: "idle"}
         ],
         ["todolistId2"]: [
             {id: v1(), title: "Book", order: 1, addedDate: "",
-                todoListId: "todolistId2", status: TaskStatuses.InProgress, startDate: "", priority: 1, deadline: "", description: ""},
+                todoListId: "todolistId2", status: TaskStatuses.InProgress, startDate: "", priority: 1, deadline: "", description: "", entityStatus: "idle"},
             {id: v1(), title: "Journal", order: 1, addedDate: "",
-                todoListId: "todolistId2", status: TaskStatuses.New, startDate: "", priority: 1, deadline: "", description: ""}
+                todoListId: "todolistId2", status: TaskStatuses.New, startDate: "", priority: 1, deadline: "", description: "", entityStatus: "idle"}
         ]
     },
     app: {

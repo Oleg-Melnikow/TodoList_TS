@@ -31,12 +31,12 @@ export const TaskExample = Template.bind({});
 TaskExample.args = {
   ...baseArg,
   task: {id: v1(), title: "JS", order: TaskStatuses.InProgress, addedDate: "",
-    todoListId: "todolistId1", status: 1, startDate: "", priority: 1, deadline: "", description: ""}
+    todoListId: "todolistId1", status: 1, startDate: "", priority: 1, deadline: "", description: "", entityStatus: "idle"}
 }
 
 export const TaskIsNotDoneExample = TaskExample.bind({});
 TaskIsNotDoneExample.args = {
   ...baseArg,
   task: {id: v1(), title: "JS", order: TaskStatuses.InProgress, addedDate: "",
-    todoListId: "todolistId1", status: 1, startDate: "", priority: 1, deadline: "", description: ""},
+    todoListId: "todolistId1", status: 1, startDate: "", priority: 1, deadline: "", description: "", entityStatus: "idle"},
 }

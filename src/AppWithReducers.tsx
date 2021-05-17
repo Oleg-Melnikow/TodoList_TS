@@ -19,14 +19,10 @@ import {
     updateTaskAC,
     addTaskTC
 } from "./state/taskReducer";
-import {TaskStatuses, TaskType} from "./api/todolist-api";
+import {TaskStatuses} from "./api/todolist-api";
 import {useDispatch} from "react-redux";
 
 export type FilterValueType = "all" | "active" | "completed";
-
-export type TaskStateType = {
-    [key: string]: Array<TaskType>
-}
 
 export function AppWithReducers() {
 
@@ -59,15 +55,16 @@ export function AppWithReducers() {
     const [tasks, dispatchTasks] = useReducer(taskReducer, {
         [todoListID_1]: [
             {id: v1(), title: "HTML&CSS", order: 1, addedDate: "",
-                todoListId: todoListID_1, status: TaskStatuses.Completed, startDate: "", priority: 1, deadline: "", description: ""},
+                todoListId: todoListID_1, status: TaskStatuses.Completed, startDate: "", priority: 1, deadline: "", description: "", entityStatus: "idle"},
             {id: v1(), title: "JS", order: TaskStatuses.InProgress, addedDate: "",
-                todoListId: todoListID_1, status: 1, startDate: "", priority: 1, deadline: "", description: ""},
+                todoListId: todoListID_1, status: 1, startDate: "", priority: 1, deadline: "", description: "", entityStatus: "idle"},
+
         ],
         [todoListID_2]: [
             {id: v1(), title: "Book", order: 1, addedDate: "",
-                todoListId: todoListID_2, status: TaskStatuses.InProgress, startDate: "", priority: 1, deadline: "", description: ""},
+                todoListId: todoListID_2, status: TaskStatuses.InProgress, startDate: "", priority: 1, deadline: "", description: "", entityStatus: "idle"},
             {id: v1(), title: "Journal", order: 1, addedDate: "",
-                todoListId: todoListID_2, status: TaskStatuses.New, startDate: "", priority: 1, deadline: "", description: ""}
+                todoListId: todoListID_2, status: TaskStatuses.New, startDate: "", priority: 1, deadline: "", description: "", entityStatus: "idle"}
         ]
     })
 

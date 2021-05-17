@@ -8,9 +8,10 @@ import Toolbar from '@material-ui/core/Toolbar';
 import {Menu} from "@material-ui/icons";
 import {TaskStatuses, TaskType} from "./api/todolist-api";
 import {FilterValueType, TodoListDomainType} from "./state/todoListReducer";
+import {TaskDomainType} from "./state/taskReducer";
 
 export type TaskStateType = {
-    [key: string]: Array<TaskType>
+    [key: string]: Array<TaskDomainType>
 }
 
 function App() {
@@ -30,8 +31,8 @@ function App() {
     }
 
     function addTask(title: string, todoListId: string) {
-        let newTask: TaskType = {id: v1(), title: title, status: TaskStatuses.New, order: 1, addedDate: "",
-        todoListId, startDate: "", priority: 1, deadline: "", description: ""}
+        let newTask: TaskDomainType = {id: v1(), title: title, status: TaskStatuses.New, order: 1, addedDate: "",
+        todoListId, startDate: "", priority: 1, deadline: "", description: "", entityStatus: "idle"}
         tasks[todoListId] = [newTask, ...tasks[todoListId]]
         setTasks({...tasks})
     }
@@ -62,15 +63,15 @@ function App() {
     const [tasks, setTasks] = useState<TaskStateType>({
         [todoListID_1]: [
             {id: v1(), title: "HTML&CSS", order: 1, addedDate: "",
-                todoListId: todoListID_1, status: TaskStatuses.Completed, startDate: "", priority: 1, deadline: "", description: ""},
+                todoListId: todoListID_1, status: TaskStatuses.Completed, startDate: "", priority: 1, deadline: "", description: "", entityStatus: "idle"},
             {id: v1(), title: "JS", order: TaskStatuses.InProgress, addedDate: "",
-                todoListId: todoListID_1, status: 1, startDate: "", priority: 1, deadline: "", description: ""},
+                todoListId: todoListID_1, status: 1, startDate: "", priority: 1, deadline: "", description: "", entityStatus: "idle"},
         ],
         [todoListID_2]: [
             {id: v1(), title: "Book", order: 1, addedDate: "",
-                todoListId: todoListID_2, status: TaskStatuses.InProgress, startDate: "", priority: 1, deadline: "", description: ""},
+                todoListId: todoListID_2, status: TaskStatuses.InProgress, startDate: "", priority: 1, deadline: "", description: "", entityStatus: "idle"},
             {id: v1(), title: "Journal", order: 1, addedDate: "",
-                todoListId: todoListID_2, status: TaskStatuses.New, startDate: "", priority: 1, deadline: "", description: ""}
+                todoListId: todoListID_2, status: TaskStatuses.New, startDate: "", priority: 1, deadline: "", description: "", entityStatus: "idle"}
         ]
     })
 
