@@ -8,22 +8,21 @@ export type AddItemFormPropsType = {
 }
 
 export const AddItemForm = React.memo(function (props: AddItemFormPropsType) {
-    console.log("AddItemForm called")
-    const [error, setError] = useState<string | null>(null)
+    const [error, setError] = useState<string | null>(null);
     const [title, setTitle] = useState("");
 
     const addItem = () => {
-        const trimmedTitle = title.trim()
+        const trimmedTitle = title.trim();
         if (trimmedTitle !== "") {
-            props.addItem(trimmedTitle)
-            setTitle("")
+            props.addItem(trimmedTitle);
+            setTitle("");
         } else {
-            setError("Title is required")
+            setError("Title is required");
         }
     }
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value)
+        setTitle(e.currentTarget.value);
     }
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {

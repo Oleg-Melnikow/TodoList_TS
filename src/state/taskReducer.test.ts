@@ -10,19 +10,19 @@ beforeEach(() => {
     startState = {
         "todoListID_1": [
             {id: "1", title: "HTML", status: TaskStatuses.New, order: 1, addedDate: "",
-                todoListId: "todoListID_1", startDate: "", priority: 1, deadline: "", description: ""},
+                todoListId: "todoListID_1", startDate: "", priority: 1, deadline: "", description: "", entityStatus: "idle"},
             {id: "2", title: "JS", status: TaskStatuses.New, order: 1, addedDate: "",
-                todoListId: "todoListID_1", startDate: "", priority: 1, deadline: "", description: ""},
+                todoListId: "todoListID_1", startDate: "", priority: 1, deadline: "", description: "", entityStatus: "idle"},
             {id: "3", title: "React", status: TaskStatuses.New, order: 1, addedDate: "",
-                todoListId: "todoListID_1", startDate: "", priority: 1, deadline: "", description: ""},
+                todoListId: "todoListID_1", startDate: "", priority: 1, deadline: "", description: "" , entityStatus: "idle"}
         ],
         "todoListID_2": [
             {id: "1", title: "CSS", status: TaskStatuses.New, order: 1, addedDate: "",
-                todoListId: "todoListID_2", startDate: "", priority: 1, deadline: "", description: ""},
+                todoListId: "todoListID_2", startDate: "", priority: 1, deadline: "", description: "", entityStatus: "idle"},
             {id: "2", title: "Redux", status: TaskStatuses.New, order: 1, addedDate: "",
-                todoListId: "todoListID_2", startDate: "", priority: 1, deadline: "", description: ""},
+                todoListId: "todoListID_2", startDate: "", priority: 1, deadline: "", description: "", entityStatus: "idle"},
             {id: "3", title: "VirtualDOM", status: TaskStatuses.New, order: 1, addedDate: "",
-                todoListId: "todoListID_2", startDate: "", priority: 1, deadline: "", description: ""}
+                todoListId: "todoListID_2", startDate: "", priority: 1, deadline: "", description: "", entityStatus: "idle"}
         ]
     }
 })

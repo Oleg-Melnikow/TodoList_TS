@@ -13,13 +13,16 @@ import {useDispatch, useSelector} from "react-redux";
 import {addTaskTC, deleteTasksTC, TaskStateType, updateTaskTC} from "./state/taskReducer";
 import {TodoList} from "./Todolist";
 import {AppRootStateType} from "./state/store";
+import {Redirect} from "react-router-dom";
 
-type PropsType = {
-}
+export const TodoListContainer = React.memo(() => {
 
-export const TodoListContainer = React.memo((props: PropsType) => {
+    const isLoggedIn = useSelector<AppRootStateType, boolean>( state => state.auth.isLoggedIn);
 
     useEffect(() => {
+        if(!isLoggedIn){
+            return;
+        }
         dispatch(setTodoListsTC())
     }, []);
 
@@ -29,36 +32,40 @@ export const TodoListContainer = React.memo((props: PropsType) => {
 
     const remoteTask = useCallback((todoListId: string, taskId: string) => {
         dispatch(deleteTasksTC(todoListId, taskId))
-    }, [dispatch])
+    }, [dispatch]);
 
     const addTask = useCallback((title: string, todoListId: string) => {
         dispatch(addTaskTC(todoListId, title))
-    }, [dispatch])
+    }, [dispatch]);
 
     const changeStatus = useCallback((taskId: string, status: TaskStatuses, todoListId: string) => {
         dispatch(updateTaskTC(taskId, {status}, todoListId))
-    }, [dispatch])
+    }, [dispatch]);
 
     const changeTaskTitle = useCallback((taskId: string, newTitle: string, todoListId: string) => {
         dispatch(updateTaskTC(taskId, {title: newTitle}, todoListId))
-    }, [dispatch])
+    }, [dispatch]);
 
     const addTodoList = useCallback((title: string) => {
         dispatch(createTodoListsTC(title));
-    }, [dispatch])
+    }, [dispatch]);
 
     const remoteTodoList = useCallback((todoListId: string) => {
         dispatch(deleteTodoListsTC(todoListId));
-    }, [dispatch])
+    }, [dispatch]);
 
 
     const changeFilter = useCallback((value: FilterValueType, todoListId: string) => {
         dispatch(changeTodoListFilterAC(todoListId, value));
-    }, [dispatch])
+    }, [dispatch]);
 
     const changeTodoListTitle = useCallback((id: string, newTitle: string) => {
         dispatch(updateTodoListTitleTC(id, newTitle))
-    }, [dispatch])
+    }, [dispatch]);
+
+    if(!isLoggedIn){
+        return <Redirect to={"/login"}/>
+    }
 
     return (
         <Container fixed>

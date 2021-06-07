@@ -57,7 +57,7 @@ export const todoListReducer = (state: Array<TodoListDomainType> = initialState,
             return state.map(tl => tl.id === action.todoListId ? {...tl, filter: action.filter} : tl)
         case 'SET-TODO_LISTS':
             return action.todoLists.map(tl => ({...tl, filter: 'all', entityStatus: "idle"}))
-        case "CHANGE-TODOLISTS_ENTITY_STATUS":
+        case "CHANGE-TODOLIST_ENTITY_STATUS":
             return state.map(tl => tl.id === action.id ? {...tl, entityStatus: action.entityStatus} : tl)
         default:
             return state
@@ -85,14 +85,14 @@ export const setTodoLists = (todoLists: Array<TodoListType>): SetTodoListsAction
 }
 
 export const changeTodolistEntityStatusAC = (id: string, entityStatus: RequestStatusType) => ({
-    type: "CHANGE-TODOLISTS_ENTITY_STATUS",
+    type: "CHANGE-TODOLIST_ENTITY_STATUS",
     id,
     entityStatus
 } as const)
 
 type ThunkType = ThunkAction<void, AppRootStateType, unknown, ActionsType>
 
-export const setTodoListsTC = (): ThunkType => (dispatch, getState: () => AppRootStateType) => {
+export const setTodoListsTC = (): ThunkType => (dispatch) => {
     dispatch(setAppStatusAC("loading"));
     todolistAPI.getTodoLists()
         .then(response => {
@@ -105,7 +105,7 @@ export const setTodoListsTC = (): ThunkType => (dispatch, getState: () => AppRoo
 }
 
 
-export const updateTodoListTitleTC = (todolistId: string, title: string): ThunkType => (dispatch, getState: () => AppRootStateType) => {
+export const updateTodoListTitleTC = (todolistId: string, title: string): ThunkType => (dispatch) => {
     dispatch(setAppStatusAC("loading"));
     todolistAPI.updateTodolist(todolistId, title)
         .then(response => {
@@ -121,7 +121,7 @@ export const updateTodoListTitleTC = (todolistId: string, title: string): ThunkT
         })
 }
 
-export const createTodoListsTC = (title: string): ThunkType => (dispatch, getState: () => AppRootStateType) => {
+export const createTodoListsTC = (title: string): ThunkType => (dispatch) => {
     dispatch(setAppStatusAC("loading"));
     todolistAPI.createTodoList(title)
         .then((response) => {
@@ -137,7 +137,7 @@ export const createTodoListsTC = (title: string): ThunkType => (dispatch, getSta
         })
 }
 
-export const deleteTodoListsTC = (todolistId: string): ThunkType => (dispatch, getState: () => AppRootStateType) => {
+export const deleteTodoListsTC = (todolistId: string): ThunkType => (dispatch) => {
     dispatch(setAppStatusAC("loading"));
     dispatch(changeTodolistEntityStatusAC(todolistId, "loading"))
     todolistAPI.deleteTodoList(todolistId)

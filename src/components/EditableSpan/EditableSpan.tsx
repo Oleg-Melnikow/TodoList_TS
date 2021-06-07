@@ -13,19 +13,18 @@ export const EditableSpan = React.memo((props: EditableSpanPropsType) => {
     let [title, setTitle] = useState(props.value);
 
     function activeEditMode() {
-        setEditMode(true)
-        setTitle(props.value)
+        setEditMode(true);
+        setTitle(props.value);
     }
 
     function activeViewMode() {
-        setEditMode(false)
-        props.changeTitle(title)
+        setEditMode(false);
+        props.changeTitle(title);
     }
 
     function onChangeHandler(e: ChangeEvent<HTMLInputElement>) {
-        setTitle(e.currentTarget.value)
+        setTitle(e.currentTarget.value);
     }
-    debugger
 
     return editMode && !props.disabled ?
         <TextField value={title} autoFocus onBlur={activeViewMode} onChange={onChangeHandler}/> :
