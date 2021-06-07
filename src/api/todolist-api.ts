@@ -66,6 +66,19 @@ export type UpdateTaskType = {
     deadline: string
 }
 
+export type LoginParamsType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha?: boolean
+}
+
+type AuthMeType = {
+    id: number,
+    email: string,
+    login: string
+}
+
 export const todolistAPI = {
     createTodoList(title: string) {
         return instance.post<ResponseType<{ item: TodoListType }>>("todo-lists/", {title})
@@ -83,7 +96,7 @@ export const todolistAPI = {
 
 export const tasksAPI = {
     createTask(todolistId: string, title: string) {
-        return instance.post<ResponseType<{item: TaskType}>>(`todo-lists/${todolistId}/tasks`, {title});
+        return instance.post<ResponseType<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks`, {title});
     },
     getTasks(todolistId: string) {
         return instance.get<ResponseTaskType>(`todo-lists/${todolistId}/tasks`)
@@ -95,3 +108,13 @@ export const tasksAPI = {
         return instance.put<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
     }
 }
+
+export const authAPI = {
+    login(data: LoginParamsType) {
+        return instance.post<ResponseType<{ userId: number }>>(`/auth/login`, data)
+    },
+    me() {
+        return instance.get<ResponseType<AuthMeType>>(`/auth/me`)
+    }
+}
+
