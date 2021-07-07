@@ -26,11 +26,11 @@ export const {setIsLoggedInAC} = slice.actions
 type ThunkType = ThunkAction<void, AppRootStateType, unknown, any>
 
 export const loginTC = (data: LoginParamsType): ThunkType => (dispatch) => {
-    dispatch(setAppStatusAC('loading'));
+    dispatch(setAppStatusAC({status: 'loading'}));
     authAPI.login(data)
         .then(response => {
             if (response.data.resultCode === 0) {
-                dispatch(setAppStatusAC("succeeded"));
+                dispatch(setAppStatusAC({status: "succeeded"}));
                 dispatch(setIsLoggedInAC({value: true}));
             } else {
                 handleServerAppError(response.data, dispatch)
@@ -42,12 +42,12 @@ export const loginTC = (data: LoginParamsType): ThunkType => (dispatch) => {
 }
 
 export const logoutTC = (): ThunkType => (dispatch) => {
-    dispatch(setAppStatusAC('loading'))
+    dispatch(setAppStatusAC({status: 'loading'}))
     authAPI.logout()
         .then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(setIsLoggedInAC({value: false}));
-                dispatch(setAppStatusAC('succeeded'));
+                dispatch(setAppStatusAC({status: 'succeeded'}));
             } else {
                 handleServerAppError(res.data, dispatch);
             }
