@@ -56,7 +56,7 @@ export const TodoListContainer = React.memo(() => {
 
 
     const changeFilter = useCallback((value: FilterValueType, todoListId: string) => {
-        dispatch(changeTodoListFilterAC(todoListId, value));
+        dispatch(changeTodoListFilterAC({todoListId: todoListId, filter: value}));
     }, [dispatch]);
 
     const changeTodoListTitle = useCallback((id: string, newTitle: string) => {

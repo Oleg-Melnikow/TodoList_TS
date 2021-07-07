@@ -1,13 +1,15 @@
-import {
-    AddTodoListActionType,
-    RemoveTodoListActionType,
-    SetTodoListsActionType
-} from "./todoListReducer";
+
 import {tasksAPI, TaskType, UpdateTaskType} from "../api/todolist-api";
 import {AppRootStateType} from "./store";
 import {RequestStatusType, setAppStatusAC} from "./appReducer";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 import {Dispatch} from "redux";
+import {
+    AddTodoListAC,
+    AddTodoListActionType, RemoveTodolistAC,
+    RemoveTodoListActionType, setTodoListsAC,
+    SetTodoListsActionType
+} from "./todoListReducer";
 
 export type ActionsType =
     ReturnType<typeof removeTaskAC>
@@ -28,7 +30,7 @@ export type TaskDomainType = TaskType & {
     entityStatus: RequestStatusType
 }
 
-export const taskReducer = (state: TaskStateType = initialState, action: ActionsType): TaskStateType => {
+export const taskReducer = (state: TaskStateType = initialState, action: any): TaskStateType => {
     switch (action.type) {
         case "REMOVE_TASK":
             return {
@@ -51,26 +53,23 @@ export const taskReducer = (state: TaskStateType = initialState, action: Actions
                     }
                 })
             }
-        case "ADD_TODOLIST":
-            return {
-                ...state,
-                [action.todoList.id]: []
-            }
-        case "REMOVE_TODOLIST": {
+        case AddTodoListAC.type:
+            return {...state, [action.payload.todoList.id]: []}
+        case RemoveTodolistAC.type: {
             const copyState = {...state}
-            delete copyState[action.todoListId];
+            delete copyState[action.payload.todoListId];
             return copyState;
         }
-        case 'SET-TODO_LISTS':
+        case setTodoListsAC.type:
             const stateCopy = {...state}
-            action.todoLists.forEach((tl) => {
+            action.payload.todoLists.forEach((tl: any) => {
                 stateCopy[tl.id] = []
             })
             return stateCopy;
         case 'SET-TASKS':
             return {
                 ...state,
-                [action.todoListId]: action.tasks.map(t => ({...t, entityStatus: "idle"}))
+                [action.todoListId]: action.tasks.map((t: any) => ({...t, entityStatus: "idle"}))
             }
         case "CHANGE-TASK_ENTITY_STATUS":
             return {

@@ -69,24 +69,24 @@ export function AppWithReducers() {
     })
 
     function addTodoList(title: string) {
-        let action = AddTodoListAC({id: v1(), addedDate: "", order: 0, title});
+        let action = AddTodoListAC({todoList: {id: v1(), addedDate: "", order: 0, title}});
         dispatchTodoLists(action);
         dispatchTasks(action);
     }
 
     function remoteTodoList(todoListId: string) {
-        let action = RemoveTodolistAC(todoListId);
+        let action = RemoveTodolistAC({todoListId: todoListId});
         dispatchTodoLists(action);
         dispatchTasks(action);
     }
 
 
     function changeFilter(value: FilterValueType, todoListId: string) {
-        dispatchTodoLists(changeTodoListFilterAC(todoListId, value));
+        dispatchTodoLists(changeTodoListFilterAC({todoListId: todoListId, filter: value}));
     }
 
     function changeTodoListTitle(id: string, newTitle: string) {
-        dispatchTodoLists(changeTodoListTitleAC(id, newTitle))
+        dispatchTodoLists(changeTodoListTitleAC({todoListId: id, newTitle: newTitle}))
     }
 
     return (
