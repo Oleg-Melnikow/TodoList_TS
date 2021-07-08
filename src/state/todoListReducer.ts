@@ -17,22 +17,26 @@ const slice = createSlice({
     initialState,
     reducers: {
         RemoveTodolistAC(state, action: PayloadAction<{ todoListId: string }>) {
-            state.filter(t => t.id !== action.payload.todoListId)
+            const index = state.findIndex(t => t.id === action.payload.todoListId);
+            if(index !== -1) state.splice(index, 1);
         },
         AddTodoListAC(state, action: PayloadAction<{ todoList: TodoListType }>) {
             state.unshift({...action.payload.todoList, filter: "all", entityStatus: "idle"})
         },
         changeTodoListTitleAC(state, action: PayloadAction<{ todoListId: string, newTitle: string }>) {
-            state.map(tl => tl.id === action.payload.todoListId ? {...tl, title: action.payload.newTitle} : tl)
+            const index = state.findIndex(t => t.id === action.payload.todoListId);
+            state[index].title = action.payload.newTitle;
         },
         changeTodoListFilterAC(state, action: PayloadAction<{ todoListId: string, filter: FilterValueType }>) {
-            state.map(tl => tl.id === action.payload.todoListId ? {...tl, filter: action.payload.filter} : tl)
+            const index = state.findIndex(t => t.id === action.payload.todoListId);
+            state[index].filter = action.payload.filter;
         },
         setTodoListsAC(state, action: PayloadAction<{ todoLists: Array<TodoListType> }>) {
             return action.payload.todoLists.map(tl => ({...tl, filter: 'all', entityStatus: "idle"}))
         },
         changeTodolistEntityStatusAC(state, action: PayloadAction<{ id: string, entityStatus: RequestStatusType }>) {
-            state.map(tl => tl.id === action.payload.id ? {...tl, entityStatus: action.payload.entityStatus} : tl)
+            const index = state.findIndex(t => t.id === action.payload.id);
+            state[index].entityStatus = action.payload.entityStatus;
         }
     }
 });
@@ -45,10 +49,6 @@ export const {
     RemoveTodolistAC,
     changeTodolistEntityStatusAC
 } = slice.actions;
-
-export type AddTodoListActionType = ReturnType<typeof AddTodoListAC>;
-export type RemoveTodoListActionType = ReturnType<typeof RemoveTodolistAC>;
-export type SetTodoListsActionType = ReturnType<typeof setTodoListsAC>;
 
 export const todoListReducer = slice.reducer;
 

@@ -29,7 +29,7 @@ export function AppWithReducers() {
     const dispatch = useDispatch()
 
     function remoteTask(id: string, todoListId: string) {
-        dispatchTasks(removeTaskAC(id, todoListId))
+        dispatchTasks(removeTaskAC({taskId: id, todoListId: todoListId}))
     }
 
     function addTask(title: string, todoListId: string) {
@@ -37,11 +37,11 @@ export function AppWithReducers() {
     }
 
     function changeStatus(id: string, status: TaskStatuses, todoListId: string) {
-        dispatchTasks(updateTaskAC(todoListId, id, {status}))
+        dispatchTasks(updateTaskAC({todoListId: todoListId, taskId: id, model: {status}}))
     }
 
     function changeTaskTitle(id: string, newTitle: string, todoListId: string) {
-        dispatchTasks(updateTaskAC(todoListId, id, {title: newTitle}))
+        dispatchTasks(updateTaskAC({todoListId: todoListId, taskId: id, model: {title: newTitle}}))
     }
 
     let todoListID_1 = v1()
